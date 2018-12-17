@@ -290,7 +290,7 @@ public void pushStates() {
 
 				int bitIndex = (j*3 + k) % 7;
 				int outIndex = j*3 + k < 7 ? 0 : 1;
-				if (states[baseY+j][baseX+k]) {
+				if (states[baseY+j][baseX+k]) { // TODO function map(baseX,baseY) => []
 					out[outIndex] = setBit(out[outIndex], bitIndex);
 				}
 			}
