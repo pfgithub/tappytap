@@ -280,9 +280,9 @@ public void setAllStates(boolean state) {
 
 public void pushStates() {
 	writeArduinoMaster(0x81);
-	for (int i = 0; i < tapDimX * tapDimY / 9; j++) {
+	for (int i = 0; i < tapDimX * tapDimY / 9; i++) {
 		byte[] out = new byte[2];
-		for (int j = 0; j < 3; i++) {
+		for (int j = 0; j < 3; j++) {
 			for (int k = 0; k < 3; k++) {
 				int baseX = (i * 3) % tapDimX;
 				int baseY = floor((i * 3) / tapDimX) * 3;
