@@ -271,8 +271,8 @@ public void setAllStates(boolean state) {
 	boolean changed = false;
 	for (int i = 0; i < tapDimX; i++) {
 		for (int j = 0; j < tapDimY; j++) {
-			if (states[i][j] != state) changed = true;
-			states[i][j] = state;
+			if (states[j][i] != state) changed = true;
+			states[j][i] = state;
 		}
 	}
 	if (changed) pushStates();
@@ -358,14 +358,14 @@ class TapConf {
 	public void sendConf() {
 		writeArduinoMaster(0x80);
 
-		writeArduinoMaster((byte)(upPulseLen & 0xFF));
-		writeArduinoMaster((byte)((upPulseLen & 0xFF00) >> 8));
+		writeArduinoMaster((byte)(downPulseLen & 0xFF));
+		writeArduinoMaster((byte)((downPulseLen & 0xFF00) >> 8));
 
 		writeArduinoMaster((byte)(interPulseDelay & 0xFF));
 		writeArduinoMaster((byte)((interPulseDelay & 0xFF00) >> 8));
 
-		writeArduinoMaster((byte)(downPulseLen & 0xFF));
-		writeArduinoMaster((byte)((downPulseLen & 0xFF00) >> 8));
+		writeArduinoMaster((byte)(upPulseLen & 0xFF));
+		writeArduinoMaster((byte)((upPulseLen & 0xFF00) >> 8));
 
 		writeArduinoMaster((byte)(pauseLen & 0xFF));
 		writeArduinoMaster((byte)((pauseLen & 0xFF00) >> 8));
