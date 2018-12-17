@@ -246,11 +246,11 @@ public void setSingleEnabled(int x, int y) {
 	for (int i = 0; i < tapDimX; i++) {
 		for (int j = 0; j < tapDimY; j++) {
 			if (i == x && j == y) {
-				if (states[j][i] != true) changed = true;
-				states[j][i] = true;
+				if (states[i][j] != true) changed = true;
+				states[i][j] = true;
 			} else {
-				if (states[j][i] != false) changed = true;
-				states[j][i] = false;
+				if (states[i][j] != false) changed = true;
+				states[i][j] = false;
 			}
 		}
 	}
