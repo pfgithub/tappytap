@@ -5,8 +5,8 @@ final float initialInterPulseDelay = 20; //ms
 final float initialDownPulseLen = 20; //ms
 final float initialPauseLen = 20; //ms
 
-final int tapDimX = 3;
-final int tapDimY = 3;
+final int tapDimX = 6;
+final int tapDimY = 6;
 
 final float minFreq = 1;
 final float maxFreq = 50;
