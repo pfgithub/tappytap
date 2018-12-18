@@ -1,5 +1,6 @@
 import processing.serial.*;
 
+/* CONFIG */
 final float /* DOWN */ intialUpPulseLen = 20; // DOWN ms
 final float /*      */ initialInterPulseDelay = 20; //ms
 final float /* UP   */ initialDownPulseLen = 20; // UP ms
@@ -16,6 +17,18 @@ final float maxFreq = 50;
 final float borderPct = 0.2;
 
 final boolean serialEnabled = false;
+
+void rawPattern(){
+  // pixel-animation-editor
+  // copy v5 full
+  // vvvvvvvvvvvvvvvvvvvvvv
+
+ 
+ 
+ 
+ // ^^^^^^^^^^^^^^^^^^^^^^
+}
+
 
 boolean debugSerial = false;
 boolean confd = false;
@@ -181,7 +194,7 @@ public void keyPressed() {
 public void pattern(){
   isAnimating = true;
   
-  /* -=PATTERN GOES HERE=- */
+  rawPattern();
     
   if(keyPressed) {pattern(); return;}
   states = new boolean[tapDimX][tapDimY]; // might be backwards, isn't it [y][x]
