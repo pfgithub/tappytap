@@ -6,13 +6,15 @@ final float /*      */ initialInterPulseDelay = 20; //ms
 final float /* UP   */ initialDownPulseLen = 20; // UP ms
 final float /*      */ initialPauseLen = 20; //ms
 
-final int tapDimX = 6; // updated ||
+final int tapDimX = 6; // updated |||
 final int tapDimY = 6;
 
-final int patternPlaybackSpeed = 100; // ms per frame
+int patternPlaybackSpeed = 1000; // ms per frame
 
 final float minFreq = 1;
 final float maxFreq = 50;
+final float minDelay = 100;
+final float maxDelay = 10000;
 
 final float borderPct = 0.2;
 
@@ -23,9 +25,6 @@ void rawPattern(){
   // copy v5 full
   // vvvvvvvvvvvvvvvvvvvvvv
 
- 
- 
- 
  // ^^^^^^^^^^^^^^^^^^^^^^
 }
 
@@ -153,6 +152,7 @@ public void drawWaveAndConf() {
   text(String.format("interPulseDelay : %.2f ms", (float)tapConf.interPulseDelay / 100), 20, 20+spacing*count++);
   text(String.format("upPulseLen : %.2f ms", (float)tapConf.downPulseLen / 100), 20, 20+spacing*count++);
   text(String.format("pauseLen : %.2f ms", (float)tapConf.pauseLen / 100), 20, 20+spacing*count++);
+  text(String.format("frameSpeed : %d ms", patternPlaybackSpeed), 20, 20+spacing*count++);
   count++;
   text(String.format("period/freq : %.2f * ms / %.2f * Hz", tapConf.period() / 100f, 100000f / tapConf.period()), 20, 20+spacing*count++);
 
@@ -162,12 +162,17 @@ public void drawWaveAndConf() {
   float freq = 100000f / tapConf.period();
   // int freqWidth = constrain(map(freq, minFreq, maxFreq, 0, width/2), 0, width/2);
   int freqWidth = int(constrain(map(log(constrain(freq, 1, 20e3)), log(minFreq), log(maxFreq), 0, width/2), 0, width/2));
+  int frameSpeedWidth = int(constrain(map(log(constrain(patternPlaybackSpeed, 1, 20e3)), log(minDelay), log(maxDelay), 0, width/2), 0, width/2));
 
   rect(0, height - 60, freqWidth, 20);
+  rect(0, height - 30, frameSpeedWidth, 20);
+  text("freq slider (log)", 20, height-48);
+  text(String.format("frame speed is %d ms", patternPlaybackSpeed), 20, height-20);
 
   fill(0);
   stroke(0);
   text("freq slider (log)", 20, height-48);
+  text(String.format("frame speed is %d ms", patternPlaybackSpeed), 20, height-20);
 
 }
 
@@ -219,7 +224,10 @@ public void mouseDragged() {
       break;
     }
     case WAVE_AND_CONF: {
-      if (mouseY > height - 80) {
+      if(mouseY > height - 40){
+        float patplaybackspeedtemp = constrain(exp(map(mouseX - width/2, 0, width/2, log(minDelay), log(maxDelay))), minDelay, maxDelay);
+        patternPlaybackSpeed = ceil(patplaybackspeedtemp);
+      }else if (mouseY > height - 80) {
         // float freq = constrain(map(mouseX - width/2, 0, width/2, minFreq, maxFreq), minFreq, maxFreq);
         float freq = constrain(exp(map(mouseX - width/2, 0, width/2, log(minFreq), log(maxFreq))), minFreq, maxFreq);
         int period = int(100000f / freq);
