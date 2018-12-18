@@ -8,6 +8,8 @@ final float /*      */ initialPauseLen = 20; //ms
 final int tapDimX = 6; // updated ||
 final int tapDimY = 6;
 
+final int patternPlaybackSpeed = 100; // ms per frame
+
 final float minFreq = 1;
 final float maxFreq = 50;
 
@@ -27,6 +29,8 @@ Serial arduinoMaster;
 boolean shifted = false;
 boolean lockMode = true;
 boolean lockModeInitial = false;
+
+boolean isAnimating = false;
 
 public enum PulseDragPoint {
   UP_END, DOWN_START, DOWN_END
@@ -106,7 +110,7 @@ public void drawTapInteraction() {
 
   fill(255);
   stroke(255);
-  text("'SHIFT' to sustain    'm' to toggle locking mode", 20, 20);
+  text("hold 'SHIFT' to sustain    'm' to toggle locking mode    hold 'c' to animate", 10,10);
 }
 
 public void drawWaveAndConf() {
@@ -168,6 +172,21 @@ public void keyPressed() {
   if (key == 'm') {
     lockMode = !lockMode;
   }
+  
+  if(key == 'c' && !isAnimating){
+    thread("pattern");
+  }
+}
+
+public void pattern(){
+  isAnimating = true;
+  
+  /* -=PATTERN GOES HERE=- */
+    
+  if(keyPressed) {pattern(); return;}
+  states = new boolean[tapDimX][tapDimY]; // might be backwards, isn't it [y][x]
+  pushStates();
+  isAnimating = false;
 }
 
 // Mouse
