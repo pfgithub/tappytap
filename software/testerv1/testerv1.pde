@@ -1,9 +1,9 @@
 import processing.serial.*;
 
-final float intialUpPulseLen = 20; //ms
-final float initialInterPulseDelay = 20; //ms
-final float initialDownPulseLen = 20; //ms
-final float initialPauseLen = 20; //ms
+final float /* DOWN */ intialUpPulseLen = 20; // DOWN ms
+final float /*      */ initialInterPulseDelay = 20; //ms
+final float /* UP   */ initialDownPulseLen = 20; // UP ms
+final float /*      */ initialPauseLen = 20; //ms
 
 final int tapDimX = 6; // updated ||
 final int tapDimY = 6;
@@ -114,15 +114,15 @@ public void drawWaveAndConf() {
   strokeWeight(5);
   
   if (tapConf.upEndPixel() != 0) {
-    line(0, 2*height/4, 0, height/4);
-    line(0, height/4, tapConf.upEndPixel(), height/4);
-    line(tapConf.upEndPixel(), height/4, tapConf.upEndPixel(), 2*height/4);
+    line(0, 2*height/4, 0, 3*height/4);
+    line(0, 3*height/4, tapConf.upEndPixel(), 3*height/4);
+    line(tapConf.upEndPixel(), 3*height/4, tapConf.upEndPixel(), 2*height/4);
   }
   line(tapConf.upEndPixel(), 2*height/4, tapConf.downStartPixel(), 2*height/4);
   if (tapConf.downStartPixel() != tapConf.downEndPixel()) {
-    line(tapConf.downStartPixel(), 2*height/4, tapConf.downStartPixel(), 3*height/4);
-    line(tapConf.downStartPixel(), 3*height/4, tapConf.downEndPixel(), 3*height/4);
-    line(tapConf.downEndPixel(), 3*height/4, tapConf.downEndPixel(), 2*height/4);
+    line(tapConf.downStartPixel(), 2*height/4, tapConf.downStartPixel(), height/4);
+    line(tapConf.downStartPixel(), height/4, tapConf.downEndPixel(), height/4);
+    line(tapConf.downEndPixel(), height/4, tapConf.downEndPixel(), 2*height/4);
   }
   line(tapConf.downEndPixel(), 2*height/4, width/2, 2*height/4);
 
@@ -132,9 +132,9 @@ public void drawWaveAndConf() {
   int spacing = 15;
   int count = 0;
 
-  text(String.format("upPulseLen : %.2f ms", (float)tapConf.upPulseLen / 100), 20, 20+spacing*count++);
+  text(String.format("downPulseLen : %.2f ms", (float)tapConf.upPulseLen / 100), 20, 20+spacing*count++);
   text(String.format("interPulseDelay : %.2f ms", (float)tapConf.interPulseDelay / 100), 20, 20+spacing*count++);
-  text(String.format("downPulseLen : %.2f ms", (float)tapConf.downPulseLen / 100), 20, 20+spacing*count++);
+  text(String.format("upPulseLen : %.2f ms", (float)tapConf.downPulseLen / 100), 20, 20+spacing*count++);
   text(String.format("pauseLen : %.2f ms", (float)tapConf.pauseLen / 100), 20, 20+spacing*count++);
   count++;
   text(String.format("period/freq : %.2f * ms / %.2f * Hz", tapConf.period() / 100f, 100000f / tapConf.period()), 20, 20+spacing*count++);
@@ -370,14 +370,14 @@ class TapConf {
   public void sendConf() {
     writeArduinoMaster(0x80);
 
-    writeArduinoMaster((byte)(downPulseLen & 0xFF));
-    writeArduinoMaster((byte)((downPulseLen & 0xFF00) >> 8));
+    writeArduinoMaster((byte)(upPulseLen & 0xFF));
+    writeArduinoMaster((byte)((upPulseLen & 0xFF00) >> 8));
 
     writeArduinoMaster((byte)(interPulseDelay & 0xFF));
     writeArduinoMaster((byte)((interPulseDelay & 0xFF00) >> 8));
 
-    writeArduinoMaster((byte)(upPulseLen & 0xFF));
-    writeArduinoMaster((byte)((upPulseLen & 0xFF00) >> 8));
+    writeArduinoMaster((byte)(downPulseLen & 0xFF));
+    writeArduinoMaster((byte)((downPulseLen & 0xFF00) >> 8));
 
     writeArduinoMaster((byte)(pauseLen & 0xFF));
     writeArduinoMaster((byte)((pauseLen & 0xFF00) >> 8));
