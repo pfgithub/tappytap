@@ -206,18 +206,11 @@ public void mousePressed() {
     mode = Mode.TAP_INTERACTION;
 
     lockModeInitial = getState(mouseXToX(mouseX), mouseYToY(mouseY));
-
-    mouseDragged();
   } else {
     mode = Mode.WAVE_AND_CONF;
-
-    if (mouseY > height - 80) {
-
-    } else {
-      pdp = tapConf.closestDragPoint(mouseX-width/2);
-      tapConf.setPoint(pdp, mouseX-width/2);
-    }
   }
+
+  mouseDragged();
 }
 
 public void clearAllTaps() {
