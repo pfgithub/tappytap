@@ -7,7 +7,7 @@ final float /* UP   */ initialDownPulseLen = 20; // UP ms
 final float /*      */ initialPauseLen = 20; //ms
 
 final int tapDimX = 6; // updated |||
-final int tapDimY = 6;
+final int tapDimY = 12;
 
 int patternPlaybackSpeed = 1000; // ms per frame
 
@@ -331,7 +331,8 @@ public void pushStates() {
 
         int bitIndex = (j*3 + k) % 7;
         int outIndex = j*3 + k < 7 ? 0 : 1;
-        if (states[baseY+j][baseX+k]) { // TODO function map(baseX,baseY) => []
+        
+        if (states[baseX+j][baseY+k]) { // TODO function map(baseX,baseY) => []
           out[outIndex] = setBit(out[outIndex], bitIndex);
         }
       }
